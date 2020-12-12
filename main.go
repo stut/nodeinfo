@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -19,5 +20,8 @@ func main() {
 
 func writeObject(folder string, category string, data interface{}) {
 	content, _ := json.MarshalIndent(data, "", "  ")
-	_ = ioutil.WriteFile(fmt.Sprintf("%s/%s.json", folder, category), content, 0644)
+	err := ioutil.WriteFile(fmt.Sprintf("%s/%s.json", folder, category), content, 0644)
+	if err != nil {
+		log.Printf("ERROR Failed to write %s/%s.json: %s\n", folder, category, err)
+	}
 }
